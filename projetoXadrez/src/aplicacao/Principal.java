@@ -63,6 +63,6 @@ public class Principal {
         }
         Interface.limparTela();
         Interface.imprimirPartida(partida, capturadas);
-        //oi
+
     }
 }
