@@ -1,5 +1,12 @@
 package tabuleiro;
 
+
+/**
+ * Classe responsável por representar uma posição no tabuleiro.
+ * Armazena os valores de linha e coluna utilizados para localizar
+ * uma peça no jogo.
+ */
+
 public class Posicao {
 
 	// Atributos
@@ -7,42 +14,66 @@ public class Posicao {
 	private int coluna;
 
 	// Construtor
+	/**
+	 * Constrói uma posição com a linha e a coluna informadas.
+	 *
+	 * @param linha linha da posição
+	 * @param coluna coluna da posição
+	 */
 	public Posicao(int linha, int coluna) {
 		this.linha = linha;
 		this.coluna = coluna;
 	}
 
-	// Getters
+	/**
+	 * Retorna a linha da posição.
+	 */
 	public int getLinha() {
 		return linha;
 	}
 
+	/**
+	 * Retorna a coluna da posição.
+	 */
 	public int getColuna() {
 		return coluna;
 	}
 
-	// Setters
+	/**
+	 * Altera a linha da posição.
+	 */
 	public void setLinha(int linha) {
 		this.linha = linha;
 	}
 
+	/**
+	 * Altera a coluna da posição.
+	 */
 	public void setColuna(int coluna) {
 		this.coluna = coluna;
 	}
 
-	// Altera linha e coluna ao mesmo tempo
+
+	/**
+	 * Altera simultaneamente os valores de linha e coluna.
+	 */
 	public void setValores(int linha, int coluna) {
 		this.linha = linha;
 		this.coluna = coluna;
 	}
 
-	// Representação em texto da posição
+
+	/**
+	 * Retorna a representação textual da posição.
+	 */
 	@Override
 	public String toString() {
 		return linha + ", " + coluna;
 	}
 
-	// Verifica se duas posições são iguais
+	/**
+	 * Verifica se duas posições são iguais.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 
@@ -59,7 +90,9 @@ public class Posicao {
 		return linha == outra.linha && coluna == outra.coluna;
 	}
 
-	// Gera um código hash compatível com equals
+	/**
+	 * Gera um código hash compatível com o método equals.
+	 */
 	@Override
 	public int hashCode() {
 		final int primo = 31;
