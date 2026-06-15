@@ -1,5 +1,11 @@
 package aplicacao;
 
+/**
+ * Classe principal do sistema.
+ * Responsável por iniciar a partida de xadrez
+ * e controlar a interação entre o usuário e o jogo.
+ */
+
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
@@ -12,6 +18,11 @@ import java.util.Scanner;
 
 public class Principal {
 
+	
+	/**
+	 * Método principal da aplicação.
+	 * Executa o ciclo da partida até ocorrer xeque-mate.
+	 */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
