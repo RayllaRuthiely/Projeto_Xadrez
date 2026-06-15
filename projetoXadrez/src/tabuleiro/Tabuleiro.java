@@ -1,5 +1,11 @@
 package tabuleiro;
 
+
+/**
+ * Classe responsável por representar o tabuleiro do jogo.
+ * Nela são armazenadas e gerenciadas todas as peças.
+ */
+
 public class Tabuleiro {
 	
 	//Atributos
@@ -8,6 +14,12 @@ public class Tabuleiro {
 	private Peca[][] pecas;
 	
 	//Construtor
+	/**
+	 * Constrói um tabuleiro com a quantidade de linhas e colunas informadas.
+	 *
+	 * @param linhas quantidade de linhas do tabuleiro
+	 * @param colunas quantidade de colunas do tabuleiro
+	 */
 	public Tabuleiro(int linhas, int colunas) {
 
 		this.linhas = linhas;
@@ -25,6 +37,13 @@ public class Tabuleiro {
 		return colunas;
 	}
 	
+	/**
+	 * Retorna a peça localizada na posição informada.
+	 *
+	 * @param linha linha da posição
+	 * @param coluna coluna da posição
+	 * @return peça encontrada ou null
+	 */
 	public Peca obterPeca(int linha, int coluna) {
 
 		if (!existePosicao(linha, coluna)) {
@@ -43,6 +62,12 @@ public class Tabuleiro {
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}
 
+	/**
+	 * Coloca uma peça em uma posição do tabuleiro.
+	 *
+	 * @param peca peça a ser colocada
+	 * @param posicao posição onde será inserida
+	 */
 	public void colocarPeca(Peca peca, Posicao posicao) {
 
 		if (existePeca(posicao)) {
@@ -53,6 +78,12 @@ public class Tabuleiro {
 		peca.posicao = posicao;
 	}
 
+	/**
+	 * Remove uma peça do tabuleiro.
+	 *
+	 * @param posicao posição da peça
+	 * @return peça removida
+	 */
 	public Peca removerPeca(Posicao posicao) {
 
 		if (!existePosicao(posicao)) {
@@ -70,6 +101,12 @@ public class Tabuleiro {
 		return aux;
 	}
 
+	/**
+	 * Verifica se existe uma posição válida no tabuleiro.
+	 *
+	 * @param posicao posição a ser verificada
+	 * @return true se a posição existir
+	 */
 	private boolean existePosicao(int linha, int coluna) {
 
 		return linha >= 0 &&
@@ -85,6 +122,12 @@ public class Tabuleiro {
 				posicao.getColuna());
 	}
 
+	/**
+	 * Verifica se existe uma peça na posição informada.
+	 *
+	 * @param posicao posição a ser verificada
+	 * @return true se houver uma peça
+	 */
 	public boolean existePeca(Posicao posicao) {
 
 		if (!existePosicao(posicao)) {
