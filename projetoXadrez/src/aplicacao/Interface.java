@@ -1,5 +1,12 @@
 package aplicacao;
 
+/**
+ * Classe responsável pela interface do sistema de xadrez.
+ * Realiza a interação com o usuário através do console,
+ * exibindo o tabuleiro, as informações da partida e lendo
+ * as posições informadas pelo jogador.
+ */
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -12,13 +19,21 @@ import xadrez.Cor;
 
 public class Interface {
 
-	// Limpa a tela (Console)
+	/**
+	 * Limpa a tela do console para melhorar a visualização da partida.
+	 */
 	public static void limparTela() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
-	// Imprime toda a partida (Atualizado para mostrar Xeque e Peças Capturadas)
+	/**
+	 * Exibe todas as informações da partida, incluindo o tabuleiro,
+	 * peças capturadas, turno, jogador atual e situação de xeque ou xeque-mate.
+	 *
+	 * @param partida partida de xadrez em andamento
+	 * @param capturadas lista de peças capturadas
+	 */
 	public static void imprimirPartida(PartidaXadrez partida, List<PecaXadrez> capturadas) {
 		imprimirTabuleiro(partida.getPecas());
 		System.out.println();
@@ -37,7 +52,11 @@ public class Interface {
 		}
 	}
 
-	// Imprime o tabuleiro padrão
+	/**
+	 * Exibe o tabuleiro no console.
+	 *
+	 * @param pecas matriz contendo as peças do jogo
+	 */
 	public static void imprimirTabuleiro(PecaXadrez[][] pecas) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -49,7 +68,13 @@ public class Interface {
 		System.out.println("  a b c d e f g h");
 	}
 
-	// Imprime o tabuleiro destacando movimentos possíveis
+	/**
+	 * Exibe o tabuleiro destacando os movimentos possíveis
+	 * da peça selecionada.
+	 *
+	 * @param pecas matriz de peças
+	 * @param movimentosPossiveis matriz indicando os movimentos válidos
+	 */
 	public static void imprimirTabuleiro(PecaXadrez[][] pecas, boolean[][] movimentosPossiveis) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -61,7 +86,13 @@ public class Interface {
 		System.out.println("  a b c d e f g h");
 	}
 
-	// Imprime uma peça isolada mantendo espaçamento fixo de 2 caracteres
+	/**
+	 * Exibe uma única peça no tabuleiro, podendo destacar
+	 * uma casa como movimento possível.
+	 *
+	 * @param peca peça a ser exibida
+	 * @param fundoAlterado indica se a posição deve ser destacada
+	 */
 	private static void imprimirPeca(PecaXadrez peca, boolean fundoAlterado) {
 		if (fundoAlterado) {
 			if (peca == null) {
@@ -78,7 +109,12 @@ public class Interface {
 		}
 	}
 
-	// Método auxiliar para listar as peças fora do jogo
+	/**
+	 * Exibe a lista de peças capturadas durante a partida,
+	 * separando-as por cor.
+	 *
+	 * @param capturadas lista de peças capturadas
+	 */
 	private static void imprimirPecasCapturadas(List<PecaXadrez> capturadas) {
 		List<PecaXadrez> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO).collect(Collectors.toList());
 		List<PecaXadrez> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
@@ -90,7 +126,13 @@ public class Interface {
 		System.out.println(Arrays.toString(pretas.toArray()));
 	}
 
-	// Lê uma posição digitada pelo usuário
+	/**
+	 * Lê uma posição digitada pelo usuário no formato do xadrez
+	 * (por exemplo: a1, e4, h8) e retorna uma PosicaoXadrez.
+	 *
+	 * @param sc objeto Scanner utilizado para leitura
+	 * @return posição informada pelo usuário
+	 */
 	public static PosicaoXadrez lerPosicaoXadrez(Scanner sc) {
 		try {
 			String s = sc.nextLine();
@@ -103,6 +145,9 @@ public class Interface {
 		}
 	}
 
+	/**
+	 * Exibe o título do sistema no início da execução.
+	 */
 	public static void mostrarTitulo() {
 		System.out.println("======================================");
 		System.out.println("         SISTEMA DE XADREZ            ");
