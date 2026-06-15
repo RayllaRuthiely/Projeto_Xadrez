@@ -1,5 +1,12 @@
 package xadrez;
 
+/**
+ * Classe responsável por gerenciar uma partida de xadrez.
+ * Controla o turno, o jogador atual, o tabuleiro, as peças,
+ * as capturas e as regras especiais do jogo, como xeque,
+ * xeque-mate, promoção e en passant.
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +36,12 @@ public class PartidaXadrez {
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
 
-	// Construtor
+	
+	/**
+	 * Construtor da partida de xadrez.
+	 * Inicializa o tabuleiro, define o primeiro turno,
+	 * o jogador inicial e posiciona todas as peças.
+	 */
 	public PartidaXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
 		turno = 1;
@@ -39,30 +51,54 @@ public class PartidaXadrez {
 	
 	// Métodos Especiais
 
+	/**
+	 * Retorna o turno atual da partida.
+	 */
 	public int getTurno() {
 		return turno;
 	}
 
+	/**
+	 * Retorna o jogador que possui a vez.
+	 */
 	public Cor getJogadorAtual() {
 		return jogadorAtual;
 	}
 
+	/**
+	 * Informa se o jogador atual está em xeque.
+	 */
 	public boolean getXeque() {
 		return xeque;
 	}
 
+	/**
+	 * Informa se a partida terminou em xeque-mate.
+	 */
 	public boolean getXequeMate() {
 		return xequeMate;
 	}
 
+	/**
+	 * Retorna a peça vulnerável à captura
+	 * especial en passant.
+	 */
 	public PecaXadrez getEnPassantVulneravel() {
 		return enPassantVulneravel;
 	}
 
+	/**
+	 * Retorna a peça que foi promovida,
+	 * caso exista uma promoção.
+	 */
 	public PecaXadrez getPromovida() {
 		return promovida;
 	}
 
+	/**
+	 * Retorna uma matriz contendo todas as peças
+	 * atualmente posicionadas no tabuleiro.
+	 */
 	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] matriz = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
 		for (int i = 0; i < tabuleiro.getLinhas(); i++) {
@@ -73,12 +109,28 @@ public class PartidaXadrez {
 		return matriz;
 	}
 
+	/**
+	 * Retorna uma matriz indicando todos os movimentos
+	 * possíveis para a peça localizada na posição informada.
+	 *
+	 * @param posicaoOrigem Posição da peça selecionada.
+	 * @return Matriz de movimentos possíveis.
+	 */
 	public boolean[][] movimentosPossiveis(PosicaoXadrez posicaoOrigem) {
 		Posicao posicao = posicaoOrigem.toPosicao();
 		validarPosicaoOrigem(posicao);
 		return tabuleiro.obterPeca(posicao).movimentosPossiveis();
 	}
 
+	/**
+	 * Executa uma jogada de xadrez, realizando todas as
+	 * validações e aplicando as regras do jogo, incluindo
+	 * promoção, xeque, xeque-mate e en passant.
+	 *
+	 * @param posicaoOrigem Posição de origem da peça.
+	 * @param posicaoDestino Posição de destino da peça.
+	 * @return Peça capturada, caso exista.
+	 */
 	public PecaXadrez executarJogadaXadrez(PosicaoXadrez posicaoOrigem, PosicaoXadrez posicaoDestino) {
 		Posicao origem = posicaoOrigem.toPosicao();
 		Posicao destino = posicaoDestino.toPosicao();
@@ -125,7 +177,13 @@ public class PartidaXadrez {
 		return (PecaXadrez) pecaCapturada;
 	}
 	
-	// Substitui a peça promovida
+	/**
+	 * Substitui um peão promovido pela peça escolhida
+	 * pelo jogador (Bispo, Cavalo, Torre ou Rainha).
+	 *
+	 * @param tipo Tipo da nova peça ("B", "C", "T" ou "Q").
+	 * @return Nova peça criada após a promoção.
+	 */
 	public PecaXadrez substituirPecaPromovida(String tipo) {
 		if (promovida == null) {
 			throw new IllegalStateException("Não existe peça para ser promovida.");
@@ -145,7 +203,14 @@ public class PartidaXadrez {
 		return novaPeca;
 	}
 
-	// Cria uma nova peça
+	/**
+	 * Cria uma nova peça de acordo com o tipo escolhido
+	 * pelo jogador durante a promoção do peão.
+	 *
+	 * @param tipo Tipo da peça ("B", "C", "T" ou "Q").
+	 * @param cor Cor da nova peça.
+	 * @return Nova peça criada.
+	 */
 	private PecaXadrez novaPeca(String tipo, Cor cor) {
 		if (tipo.equals("B")) {
 			return new Bispo(tabuleiro, cor);
@@ -159,7 +224,15 @@ public class PartidaXadrez {
 		return new Torre(tabuleiro, cor);
 	}
 
-	// Executa um movimento
+	/**
+	 * Executa o movimento de uma peça no tabuleiro,
+	 * realizando capturas e aplicando os movimentos
+	 * especiais do jogo, como roque e en passant.
+	 *
+	 * @param origem Posição inicial da peça.
+	 * @param destino Posição de destino da peça.
+	 * @return Peça capturada, caso exista.
+	 */
 	private Peca executarMovimento(Posicao origem, Posicao destino) {
 		PecaXadrez p = (PecaXadrez) tabuleiro.removerPeca(origem);
 		p.incrementarQuantidadeMovimentos();
@@ -301,6 +374,11 @@ public class PartidaXadrez {
 		throw new IllegalStateException("Não existe rei " + cor + " no tabuleiro.");
 	}
 	
+	/**
+	 * Verifica se o rei da cor informada está em situação de xeque.
+	 * O método percorre todas as peças adversárias e analisa seus
+	 * movimentos possíveis para verificar se alguma ameaça o rei.
+	 */
 	private boolean testeXeque(Cor cor) {
 	    Posicao kingPos = rei(cor).getPosicaoXadrez().toPosicao();
 
@@ -319,6 +397,11 @@ public class PartidaXadrez {
 	    return false;
 	}
 	
+	/**
+	 * Verifica se o jogador da cor informada está em situação de
+	 * xeque-mate. Para isso, simula todos os movimentos possíveis e
+	 * verifica se existe algum que elimine o xeque.
+	 */
 	private boolean testeXequeMate(Cor cor) {
 	    if (!testeXeque(cor)) {
 	        return false;
@@ -352,6 +435,10 @@ public class PartidaXadrez {
 	    return true;
 	}
 	
+	/**
+	 * Adiciona uma nova peça ao tabuleiro na posição indicada e
+	 * registra essa peça na lista de peças presentes na partida.
+	 */
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrez peca) {
 	    tabuleiro.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
 	    pecasNoTabuleiro.add(peca);
